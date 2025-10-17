@@ -128,8 +128,38 @@ int work2() {
     return 0;
 }
 
+int work3() {
+    cout << "[+] Введите число: ";
+
+    int num;
+    cin >> num;
+
+    if (num < 0) {
+        cout << "[+] Ошибка! Число меньше 0." << endl;
+        return 1;
+    }
+
+    if (num > 100) {
+        cout << "[+] Ошибка! Число больше 100." << endl;
+        return 1;
+    }
+
+    if (num <= 10)
+        cout << "[+] Число в диапазоне: 0 - 10" << endl;
+
+    else for (int i = 20; i <= 110; i += 10) {
+        if (num <= i) {
+            cout
+                << "[+] Число в диапазоне: " << i - 9 << " - " << i << endl;
+            break;
+        }
+    }
+
+    return 0;
+}
+
 int main()
 {
     setlocale(0, "");
-    return work2();
+    return work3();
 }

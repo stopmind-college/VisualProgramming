@@ -158,8 +158,74 @@ int work3() {
     return 0;
 }
 
+int work4() {
+    cout << "[+] Введите число: ";
+
+    int base;
+    cin >> base;
+
+    for (int i = 1; i <= 9; i++) {
+        int result;
+        
+        cout
+            << "[+] Решит пример " << base << " x " << i << endl
+            << "[+] Ответ: ";
+
+        cin >> result;
+
+        if (result == i * base) {
+            cout << "[+] Пример решен правильно!" << endl;
+        }
+        else {
+            cout << "[-] Ошибка, пример решен неверно!" << endl;
+            return 1;
+        }
+    }
+
+    cout << "[+] Примеры решены, поздравляем! " << endl;
+
+    return 0;
+}
+
+int work5() {
+    int a, b;
+
+    cout << "[+] Введите A: ";
+    cin >> a;
+    cout << "[+] Введите B: ";
+    cin >> b;
+
+    cout
+        << "[+] Доступны операции: + - * / %" << endl
+        << "[+] Выберите оперрацию: ";
+
+    char op;
+    cin >> op;
+
+    switch (op) {
+    case '+':
+        cout << "[+] Результат: " << a << " + " << b << " = " << a + b << endl;
+        break;
+    case '-':
+        cout << "[+] Результат: " << a << " - " << b << " = " << a - b << endl;
+        break;
+    case '*':
+        cout << "[+] Результат: " << a << " * " << b << " = " << a * b << endl;
+        break;
+    case '/':
+        cout << "[+] Результат: " << a << " / " << b << " = " << a / b << endl;
+        break;
+    case '%':
+        cout << "[+] Результат: " << a << " % " << b << " = " << a % b << endl;
+        break;
+    default:
+        cout << "[-] Неизвестная операция" << endl;
+        return 1;
+    }
+}
+
 int main()
 {
     setlocale(0, "");
-    return work3();
+    return work5();
 }

@@ -29,11 +29,11 @@ int work1()
     cout << "s_4   = " << s_4 << " | тип: short, размер: 2 б." << endl;
     cout << "s_5   = " << s_5 << " | тип: short, размер: 2 б." << endl;
 
-    float f_1 = 6.343;
-    float f_2 = 3.14;
-    float f_3 = 2.13;
-    float f_4 = -99;
-    float f_5 = 09.322;
+    float f_1 = 6.343f;
+    float f_2 = 3.14f;
+    float f_3 = 2.13f;
+    float f_4 = -99.f;
+    float f_5 = 09.322f;
 
     cout << "f_1   = " << f_1 << " | тип: float, размер: 4 б." << endl;
     cout << "f_2   = " << f_2 << " | тип: float, размер: 4 б." << endl;
@@ -222,6 +222,8 @@ int work5() {
         cout << "[-] Неизвестная операция" << endl;
         return 1;
     }
+
+    return 0;
 }
 
 int work6() {
@@ -290,8 +292,132 @@ int work6() {
     return 0;
 }
 
+int work7() {
+    cout
+        << "[+ ] Месяца года:" << endl
+        << "[1 ] Январь" << endl
+        << "[2 ] Февраль" << endl
+        << "[3 ] Март" << endl
+        << "[4 ] Апрель" << endl
+        << "[5 ] Май" << endl
+        << "[6 ] Июнь" << endl
+        << "[7 ] Июль" << endl
+        << "[8 ] Август" << endl
+        << "[9 ] Сентябрь" << endl
+        << "[10] Октябрь" << endl
+        << "[11] Ноябырь" << endl
+        << "[12] Декабрь" << endl
+        << endl
+        << "[+] Выберите месяц: ";
+
+    int month;
+    cin >> month;
+
+    switch (month) {
+    case 1:
+        cout << "[+] Выбран месяц \"Январь\"" << endl;
+        break;
+    case 2:
+        cout << "[+] Выбран месяц \"Февраль\"" << endl;
+        break;
+    case 3:
+        cout << "[+] Выбран месяц \"Март\"" << endl;
+        break;
+    case 4:
+        cout << "[+] Выбран месяц \"Апрель\"" << endl;
+        break;
+    case 5:
+        cout << "[+] Выбран месяц \"Май\"" << endl;
+        break;
+    case 6:
+        cout << "[+] Выбран месяц \"Июнь\"" << endl;
+        break;
+    case 7:
+        cout << "[+] Выбран месяц \"Июль\"" << endl;
+        break;
+    case 8:
+        cout << "[+] Выбран месяц \"Август\"" << endl;
+        break;
+    case 9:
+        cout << "[+] Выбран месяц \"Сентябрь\"" << endl;
+        break;
+    case 10:
+        cout << "[+] Выбран месяц \"Октябрь\"" << endl;
+        break;
+    case 11:
+        cout << "[+] Выбран месяц \"Ноябырь\"" << endl;
+        break;
+    case 12:
+        cout << "[+] Выбран месяц \"Декабрь\"" << endl;
+        break;
+    default:
+        cout << "[+] Неправильно введен номер месяца!" << endl;
+        return 1;
+    }
+
+    cout << "[+] Выберите день месяца: ";
+    int day;
+    cin >> day;
+
+    if (day < 1) {
+        invalid_day:
+        cout << "[+] Недопустимый день.";
+        return 1;
+    }
+
+    switch (month) {
+    case 2:
+        if (day > 28) goto invalid_day;
+    case 6:
+    case 9:
+    case 11:
+    case 4:
+        if (day > 30) goto invalid_day;
+    default:
+        if (day > 31) goto invalid_day;
+    }
+
+    switch (month) {
+    case 1:
+        cout << "[+] Календарь: " << day << " января." << endl;
+        break;
+    case 2:
+        cout << "[+] Календарь: " << day << " февраля." << endl;
+        break;
+    case 3:
+        cout << "[+] Календарь: " << day << " марта." << endl;
+        break;
+    case 4:
+        cout << "[+] Календарь: " << day << " апреля." << endl;
+        break;
+    case 5:
+        cout << "[+] Календарь: " << day << " мая." << endl;
+        break;
+    case 6:
+        cout << "[+] Календарь: " << day << " июня." << endl;
+        break;
+    case 7:
+        cout << "[+] Календарь: " << day << " июля." << endl;
+        break;
+    case 8:
+        cout << "[+] Календарь: " << day << " августа." << endl;
+        break;
+    case 9:
+        cout << "[+] Календарь: " << day << " сентября." << endl;
+        break;
+    case 10:
+        cout << "[+] Календарь: " << day << " октября." << endl;
+        break;
+    case 11:
+        cout << "[+] Календарь: " << day << " ноябыря." << endl;
+        break;
+    default:
+        cout << "[+] Календарь: " << day << " декабря." << endl;
+    }
+}
+
 int main()
 {
     setlocale(0, "");
-    return work6();
+    return work7();
 }

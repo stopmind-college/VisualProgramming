@@ -416,8 +416,98 @@ int work7() {
     }
 }
 
+int work8() {
+    const int WORDS_COUNT = 10;
+
+    string RU[] = {
+        "Дорога",
+        "Человек",
+        "День",
+        "Сегодня",
+        "Погода",
+
+        "Год",
+        "Время",
+        "Информация",
+        "Дом",
+        "Неделя"
+    };
+
+    string EN[] = {
+        "Road",
+        "Human",
+        "Day",
+        "Today",
+        "Weather",
+        
+        "Year",
+        "Time",
+        "Infromation",
+        "Home",
+        "Week"
+    };
+
+    cout
+        << "[+] Переводчик" << endl
+        << endl
+        << "[1] Русский" << endl
+        << "[2] Английский" << endl
+        << endl
+        << "[3] Выйти" << endl
+        << endl
+        << "[+] Выберите вариант: ";
+
+    int n;
+
+    string* original;
+    string* translated;
+
+    cin >> n;
+    switch (n) {
+    case 1:
+        cout << "[+] Выбран русский." << endl;
+
+        original = RU;
+        translated = EN;
+        break;
+    case 2:
+        cout << "[+] Выбран английский." << endl;
+
+        original = EN;
+        translated = RU;
+        break;
+    case 3:
+        cout << "[+] Выход." << endl;
+
+        return 0;
+    default:
+        cout << "[-] Недопустимый ввод." << endl;
+        return 1;
+    }
+
+    cout << endl;
+
+    for (int i = 0; i < WORDS_COUNT; i++) {
+        cout << "[" << i+1 << "] " << original[i] << endl;
+    }
+
+    cout
+        << endl
+        << "[+] Выберите номер слова: ";
+    cin >> n;
+    n--;
+
+    if (n < 0 || n >= WORDS_COUNT) {
+        cout << "[-] Недопустимый ввод." << endl;
+        return 1;
+    }
+
+    cout << "[+] Перевод: " << original[n] << " -> " << translated[n] << endl;
+    return 0;
+}
+
 int main()
 {
     setlocale(0, "");
-    return work7();
+    return work8();
 }

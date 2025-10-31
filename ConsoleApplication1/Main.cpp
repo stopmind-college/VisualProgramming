@@ -417,9 +417,9 @@ int work7() {
 }
 
 int work8() {
-    const int WORDS_COUNT = 10;
+    const int WORDS_COUNT = 15;
 
-    string RU[] = {
+    string RU[WORDS_COUNT] = {
         "Дорога",
         "Человек",
         "День",
@@ -430,10 +430,16 @@ int work8() {
         "Время",
         "Информация",
         "Дом",
-        "Неделя"
+        "Неделя",
+
+        "Стол",
+        "Свет", 
+        "Гора",
+        "Цвет",
+        "Коробка"
     };
 
-    string EN[] = {
+    string EN[WORDS_COUNT] = {
         "Road",
         "Human",
         "Day",
@@ -444,7 +450,13 @@ int work8() {
         "Time",
         "Infromation",
         "Home",
-        "Week"
+        "Week",
+
+        "Table",
+        "Light",
+        "Mountain",
+        "Color",
+        "Box"
     };
 
     cout
@@ -506,8 +518,35 @@ int work8() {
     return 0;
 }
 
+int work9() {
+    int n;
+    while (true) {
+
+        cout
+            << "[+] Цикл \"WHILE\"" << endl
+            << endl
+            << "[+] Введите число: ";
+
+
+        cin >> n;
+        if (n == 0) {
+            cout << "[+] Выход" << endl;
+            return 0;
+        }
+
+        if (n < 0 || n > 15) {
+            cout << "[-] Недопустимое значение!" << endl;
+        }
+        else {
+            n += 1;
+            for (int i = 1; i < n; i++)
+                cout << "[+] Цикл отработал. Круг: " << i << "." << endl;
+        }
+    }
+}
+
 int main()
 {
     setlocale(0, "");
-    return work8();
+    return work9();
 }

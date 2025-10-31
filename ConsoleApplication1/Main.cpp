@@ -545,8 +545,88 @@ int work9() {
     }
 }
 
+int work10() {
+    start:
+    cout
+        << "[+] Игра \"Угадайка\"" << endl
+        << endl
+        << "[1] Начать игру" << endl
+        << "[2] Выйти" << endl
+        << endl
+        << "[>] Выберите вариант: ";
+
+    int n;
+    cin >> n;
+
+    switch (n) {
+    case 1:
+        break;
+    case 2:
+        cout << "[+] Выход" << endl;
+        return 0;
+    default:
+        cout << "[-] Недопустимый ввод" << endl;
+        goto start;
+    }
+
+    int nums[] = {
+        rand() % 10 + 1,
+        rand() % 10 + 1,
+        rand() % 10 + 1
+    };
+
+    cout
+        << nums[0] << endl
+        << nums[1] << endl
+        << nums[2] << endl
+        << endl;
+
+    int guess_counter = 0;
+    int try_counter = 5;
+
+    while (true) {
+        cout
+            << endl
+            << "[+] Угаданных чисел : [" << guess_counter << " / 3]" << endl
+            << "[+] Попыток : [" << try_counter <<"]" << endl
+            << endl
+            << "[>] Угадать число: ";
+
+        cin >> n;
+
+        if (n < 1 || n > 10) {
+            cout << "[-] Недопустимый ввод!" << endl;
+            continue;
+        }
+
+        try_counter--;
+
+        if (nums[guess_counter] == n) {
+            cout << "[+] Вы угадали число!" << endl;
+            guess_counter++;
+        }
+        else {
+            cout << "[-] Вы не угадали число!" << endl;
+        }
+
+        cout << endl;
+
+        if (guess_counter == 3) {
+            cout << "[+] Вы победили!" << endl;
+            break;
+        }
+
+        if (try_counter == 0) {
+            cout << "[-] Вы проиграли!" << endl;
+            break;
+        }
+    }
+
+    return 0;
+}
+
 int main()
 {
     setlocale(0, "");
-    return work9();
+    return work10();
 }

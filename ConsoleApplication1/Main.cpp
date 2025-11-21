@@ -774,8 +774,8 @@ int work11() {
             }
         }
         else {
-            int gap = size / 2 - 1;
-            for (int i = size % 2; i < size; i += 2) {
+            int gap = (size - 1) / 2 + 1;
+            for (int i = (size + 1) % 2 + 1; i <= size; i += 2) {
                 for (int j = 0; j < gap; j++) {
                     cout << " ";
                 }
@@ -797,8 +797,210 @@ invalid_value:
     return 1;
 }
 
+char question(int n) {
+    switch (n) {
+    case 1:
+        cout
+            << "[1] Вопрос : Системный язык программирования ? " << endl
+            << "[A] Python [B] С#" << endl
+            << "[C] Ruby   [D] C++" << endl;
+
+        return 'D';
+    case 2:
+        cout
+            << "[2] Вопрос : Какая из перечисленных клавиш стандартной QWERTY-клавиатуры НЕ является парной?" << endl
+            << "[A] Ctrl [B] Tab" << endl
+            << "[C] Alt  [D] Shift" << endl;
+
+        return 'B';
+    case 3:
+        cout
+            << "[3] Вопрос : Общедоступная мультиязычная универсальная Интернет-энциклопедия, основанная Ларри Сэнгером и Джимми Уэйлсом, называется... " << endl
+            << "[A] Хабрхабр  [B] Большой энциклопедический словарь" << endl
+            << "[C] Википедия [D] Британская энциклопедия" << endl;
+
+        return 'C';
+    case 4:
+        cout
+            << "[4] Вопрос : После выключения компьютера пропадает информация, находящаяся..." << endl
+            << "[A] в оперативной памяти [B] на жёстком диске" << endl
+            << "[C] на CD-диске          [D] на USB - флеш - накопителе" << endl;
+
+        return 'A';
+    case 5:
+        cout
+            << "[5] Вопрос : У Эллочки в бусах А7(16) бусинок, а у её подруги Людочки на 100(3) бусинок меньше. Сколько бусинок в бусах у Людочки?" << endl
+            << "[A] 9F(16)  [B] 10011110(2)" << endl
+            << "[C] 137(8)  [D] 159(10)" << endl;
+
+        return 'B';
+    case 6:
+        cout
+            << "[6] Вопрос : Укажите устройства вывода информации " << endl
+            << "[A] Монитор [B] Клавиатура" << endl
+            << "[C] Мышь    [D] Сканер " << endl;
+
+        return 'A';
+    case 7:
+        cout
+            << "[7] Вопрос : Macintosh – линейка персональных компьютеров, спроектированных, разработанных, производимых и продаваемых фирмой " << endl
+            << "[A] Apple [B] Dell" << endl
+            << "[C] IBM   [D] Compaq" << endl;
+
+        return 'A';
+    case 8:
+        cout
+            << "[8] Вопрос : Какой объем памяти имела автоматическая цифровая вычислительная машина М-1 ? " << endl
+            << "[A] 256 слов  [B] 1024 слов" << endl
+            << "[C] 1000 слов [D] 1 000 000 слов" << endl;
+
+        return 'A';
+    case 9:
+        cout
+            << "[9] Вопрос : Какого числа отмечается День программиста? " << endl
+            << "[A] 1 сентября  [B] 13 сентября" << endl
+            << "[C] 12 сентября [D] 4 декабря" << endl;
+
+        return 'C';
+    case 10:
+        cout
+            << "[10] Вопрос : Мотылек замкнул крылышками контакты. Какое жаргонное слово в программировании появилось по этому случаю? " << endl
+            << "[A] error   [B] breakdown" << endl
+            << "[C] mistake [D] bug" << endl;
+
+        return 'D';
+    case 11:
+        cout
+            << "[11] Вопрос : Какому устройству дал имя винтовочный патрон американского происхождения? " << endl
+            << "[A] ROM [B] RAM" << endl
+            << "[C] HDD [D] CPU" << endl;
+
+        return 'C';
+    case 12:
+        cout
+            << "[12] Вопрос : Какова была тактовая частота у первой модели персонального компьютера фирмы IBM? " << endl
+            << "[A] 4,77 ГГц [B] 8800 Гц" << endl
+            << "[C] 8 МГц    [D] 4,77 МГц" << endl;
+
+        return 'D';
+    default:
+        cout << "Ошибка";
+        return '\xFF';
+    }
+}
+
+int work12() {
+    string name = "Игрок";
+    int questions_count = 10;
+
+    while (true) {
+        cout
+            << " Главное меню " << endl
+            << "1. Начать игру" << endl
+            << "2.  Настройки " << endl
+            << "3.   Правила  " << endl
+            << "4.    Выйти   " << endl
+            << endl
+            << ": ";
+
+        int i;
+        cin >> i;
+
+        switch (i) {
+        case 1: {
+            int points = 0;
+            int lives = 3;
+            int n = 1;
+
+            while (true) {
+                cout << endl << "[+] Игрок: " << name << " | жизни: " << lives << " | очки: " << points << "" << endl;
+                char correct = question(n);
+                cout << "[+] Выбрать ответ: ";
+                char user_choice; cin >> user_choice;
+
+                if (user_choice == correct) {
+                    points++;
+                    cout << "Ответ правильный!" << endl;
+                }
+                else {
+                    lives--;
+                    cout << "Ответ неправильный!" << endl;
+                }
+
+                if (lives == 0) {
+                    cout
+                        << "Жизни кончились!" << endl
+                        << "Вы проиграли!" << endl;
+                    break;
+                }
+
+                n++;
+                if (n > questions_count) {
+                    cout
+                        << "Викторина окончена" << endl
+                        << "Набрано баллов: " << points << endl
+                        << "Жизней осталось: " << lives << endl
+                        << endl;
+                    break;
+                }
+            }
+            break;
+        }   
+        case 2:
+            cout 
+                << "Настройка" << endl
+                << "1. В главное меню." << endl
+                << "2. Сменить имя. (" << name << ")" << endl
+                << "3. Изменить количество вопросов. (" << questions_count << ")" << endl
+                << endl
+                << ": ";
+
+            cin >> i;
+            
+            
+            switch (i) {
+            case 1:
+                break;
+            case 2:
+                cout << "Введите новое имя: ";
+                cin >> name;
+                break;
+            case 3:
+                cout << "Введите количество вопросов (8-12): ";
+                cin >> questions_count;
+
+                if (questions_count < 8 || questions_count > 12)
+                    goto invalid_value;
+
+                break;
+            default:
+                goto invalid_value;
+            }
+            break;
+        case 3:
+            cout 
+                << endl
+                << "Правила:" << endl
+                << "- Игрок получает очки за правильный ответ на вопрос;" << endl
+                << "- Игрок проходит дальше за правильный ответ;" << endl
+                << "- Игрок теряет жизнь при неправильном ответе." << endl
+                << endl;
+            break;
+        case 4:
+            cout << "Выход" << endl;
+            return 0;
+        default:
+            goto invalid_value;
+        }
+    }
+
+invalid_value:
+    cout << "Недопустимое значение!" << endl;
+    return 1;
+}
+
 int main()
 {
     setlocale(0, "");
-    return work11();
+    return work12(); 
 }

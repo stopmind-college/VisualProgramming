@@ -619,13 +619,19 @@ int work10() {
     return 0;
 }
 
-int work11() {
+int work11_13_14_15_16_17_18_19_20_21() {
     cout 
         << "[+] Программа - Геометрические фигуры" << endl
         << "[1] Линия" << endl
         << "[2] Круг" << endl
         << "[3] Квадрат" << endl
         << "[4] Треугольник" << endl
+        << "[5] Решетка" << endl
+        << "[6] Крест" << endl
+        << "[7] Плюс" << endl
+        << "[8] Ромб" << endl
+        << "[9] Змейка" << endl
+        << "[10] Рекурсивный квадрат" << endl
         << "[+] Выберите фигуру : ";
 
     int figure;
@@ -659,28 +665,30 @@ int work11() {
         cout
             << "[+] Фигура: Треугольник" << endl
             << endl
-            << "[1] Сверху-вниз" << endl
-            << "[2] Снизу-верх" << endl;
+            << "[1] С заливкой" << endl
+            << "[2] Без заливки" << endl;
         break;
+    case 5:
+    case 6:
+    case 7: 
+    case 8:
+    case 9:
+    case 10: break;
     default:
         goto invalid_value;
     }
 
-    cout
-        << endl
-        << "[+] Выберите тип: ";
+
     int type;
-    cin >> type;
+    if (figure < 5) {
+        cout
+            << endl
+            << "[+] Выберите тип: ";
+        cin >> type;
 
-    if (type < 1 || type > 2)
-        goto invalid_value;
-
-    cout << "[+] Размер: ";
-    int size;
-    cin >> size;
-
-    if (size <= 0)
-        goto invalid_value;
+        if (type < 1 || type > 2)
+            goto invalid_value;
+    }
 
     cout << "[+] Текстура: ";
     char tex;
@@ -689,26 +697,50 @@ int work11() {
     cout << endl;
 
     switch (figure) {
-    case 1:
+    case 1: {
+        cout << "[+] Ширина: ";
+        int width;
+        cin >> width;
+
+        cout << "[+] Высота: ";
+        int height;
+        cin >> height;
+
+        if (width <= 0 || height <= 0)
+            goto invalid_value;
+
         if (type == 1) {
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < width; i++)
                 cout << tex;
             cout << endl;
 
         }
         else {
-            for (int i = 0; i < size; i++)
+            for (int i = 0; i < height; i++)
                 cout << tex << endl;
             cout << endl;
         }
         break;
-    case 2:
+    }
+    case 2: {
+        cout << "[+] Ширина: ";
+        int width;
+        cin >> width;
+
+        cout << "[+] Высота: ";
+        int height;
+        cin >> height;
+
+        if (width <= 0 || height <= 0)
+            goto invalid_value;
+
+
         if (type == 1) {
-            for (int y = 0; y <= size; y++) {
-                for (int x = 0; x <= size; x++)
+            for (int y = 0; y <= height; y++) {
+                for (int x = 0; x <= width; x++)
                 {
-                    int len = sqrt(pow(x - size / 2, 2) + pow(y - size / 2, 2));
-                    if (len <= size / 2)
+                    float len = sqrt(pow((float)x / (float)width - 0.5f, 2) + pow((float)y / (float)height - 0.5f, 2));
+                    if (len <= 0.5f)
                         cout << tex;
                     else
                         cout << " ";
@@ -717,11 +749,11 @@ int work11() {
             }
         }
         else {
-            for (int y = 0; y <= size; y++) {
-                for (int x = 0; x <= size; x++)
+            for (int y = 0; y <= height; y++) {
+                for (int x = 0; x <= width; x++)
                 {
-                    int len = sqrt(pow(x - size / 2, 2) + pow(y - size / 2, 2));
-                    if (len == size / 2)
+                    float len = sqrt(pow((float)x / (float)width - 0.5f, 2) + pow((float)y / (float)height - 0.5f, 2));
+                    if (len > 0.45f && len < 0.55f)
                         cout << tex;
                     else
                         cout << " ";
@@ -730,64 +762,302 @@ int work11() {
             }
         }
         break;
-    case 3:
+    }
+    case 3: {
+        cout << "[+] Ширина: ";
+        int width;
+        cin >> width;
+
+        cout << "[+] Высота: ";
+        int height;
+        cin >> height;
+
+        if (width <= 0 || height <= 0)
+            goto invalid_value;
+
+
         if (type == 1) {
-            for (int i = 0; i < size; i++) {
-                for (int j = 0; j < size*2; j++)
+            for (int i = 0; i < height; i++) {
+                for (int j = 0; j < width * 2; j++)
                     cout << tex;
                 cout << endl;
             }
         }
         else {
 
-            for (int i = 0; i < size; i++)
-                cout << tex << tex;
+            for (int i = 0; i < width; i++)
+                cout << tex;
 
             cout << endl;
-            for (int i = 0; i < size-2; i++) {
-                cout << tex << " ";
-                for (int j = 0; j < size-2; j++)
-                    cout << "  ";
-                cout << " " << tex << endl;
+            for (int i = 0; i < height - 2; i++) {
+                cout << tex;
+                for (int j = 0; j < width - 2; j++)
+                    cout << " ";
+                cout << tex << endl;
             }
 
 
-            for (int i = 0; i < size; i++)
-                cout << tex << tex;
+            for (int i = 0; i < width; i++)
+                cout << tex;
 
             cout << endl;
         }
         break;
-    case 4:
+    }
+    case 4: {
+        cout << "[+] Размер: ";
+        int size;
+        cin >> size;
+
+        char inner_tex = ' ';
         if (type == 1) {
-            int gap = 0;
-            for (int i = size; i >= 0; i -= 2) {
-                for (int j = 0; j < gap; j++) {
-                    cout << " ";
-                }
-                for (int j = 0; j < i; j++) {
-                    cout << tex;
-                }
-
-                cout << endl;
-                gap++;
-            }
+            inner_tex = tex;
         }
-        else {
-            int gap = (size - 1) / 2 + 1;
-            for (int i = (size + 1) % 2 + 1; i <= size; i += 2) {
-                for (int j = 0; j < gap; j++) {
-                    cout << " ";
-                }
-                for (int j = 0; j < i; j++) {
-                    cout << tex;
-                }
 
-                cout << endl;
-                gap--;
+        if (size <= 0)
+            goto invalid_value;
+
+        int left = size / 2;
+        int inner = 0;
+        if (size % 2 == 1)
+        {
+            for (int i = 0; i < left; i++)
+                cout << " ";
+            cout << tex << endl;
+            left--;
+            inner++;
+        }
+
+        while (left > 0) {
+            for (int i = 0; i < left; i++)
+                cout << " ";
+            cout << tex;
+            for (int i = 0; i < inner; i++)
+                cout << inner_tex;
+            cout << tex << endl;
+
+            left--;
+            inner += 2;
+        }
+
+        for (int i = 0; i < size; i++)
+            cout << tex;
+        cout << endl;
+
+
+        break;
+    }
+    case 5: {
+        cout << "[+] Ширина: ";
+        int width;
+        cin >> width;
+
+        cout << "[+] Высота: ";
+        int height;
+        cin >> height;
+
+        if (width <= 0 || height <= 0)
+            goto invalid_value;
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (x % 2 == 1 || y % 2 == 1)
+                    cout << tex ;
+                else
+                    cout << " ";
             }
+            cout << endl;
         }
         break;
+    }
+    case 6: {
+        cout << "[+] Размер: ";
+        int size;
+        cin >> size;
+
+        if (size <= 0)
+            goto invalid_value;
+
+        int i = size;
+        int w = -1;
+        while (true) {
+            i -= 2;
+            w++;
+
+            if (i == -1) {
+                for (int j = 0; j < w; j++)
+                    cout << ' ';
+                cout << tex << endl;
+                break;
+            }
+
+            for (int j = 0; j < w; j++)
+                cout << ' ';
+            cout << tex;
+            for (int j = 0; j < i; j++)
+                cout << ' ';
+            cout << tex << endl;
+
+            if (i == 0) {
+                for (int j = 0; j < w; j++)
+                    cout << ' ';
+                cout << tex << tex << endl;
+                break;
+            }
+        }
+        while (w != 0) {
+            w--;
+            i += 2;
+
+            for (int j = 0; j < w; j++)
+                cout << ' ';
+            cout << tex;
+            for (int j = 0; j < i; j++)
+                cout << ' ';
+            cout << tex << endl;
+        }
+
+        break;
+    }   
+    case 7: {
+        cout << "[+] Ширина: ";
+        int width;
+        cin >> width;
+
+        cout << "[+] Высота: ";
+        int height;
+        cin >> height;
+
+        if (width <= 0 || height <= 0)
+            goto invalid_value;
+
+        int gap_w = (width - 1) / 2;
+        int gap_h = (height - 1) / 2;
+
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (x == gap_w || y == gap_h)
+                    cout << tex;
+                else
+                    cout << " ";
+            }
+
+            cout << endl;
+        }
+        break;
+    }
+    case 8: {
+        cout << "[+] Размер: ";
+        int size;
+        cin >> size;
+
+        if (size <= 0)
+            goto invalid_value;
+
+        int left = size / 2;
+        int inner = 0;
+        if (size % 2 == 1)
+        {
+            for (int i = 0; i < left; i++)
+                cout << " ";
+            cout << tex << endl;
+            left--;
+            inner++;
+        }
+
+        while (left >= 0) {
+            for (int i = 0; i < left; i++)
+                cout << " ";
+            cout << tex;
+            for (int i = 0; i < inner; i++)
+                cout << " ";
+            cout << tex << endl;
+
+            left--;
+            inner += 2;
+        };
+
+        left += 2;
+        inner -= 4;
+
+        while (inner >= 0) {
+            for (int i = 0; i < left; i++)
+                cout << " ";
+            cout << tex;
+            for (int i = 0; i < inner; i++)
+                cout << " ";
+            cout << tex << endl;
+
+            left++;
+            inner -= 2;
+        };
+        
+        if (inner == -1) {
+            for (int i = 0; i < left; i++)
+                cout << " ";
+            cout << tex << endl;
+        }
+
+        break;
+    }
+    case 9: {
+        cout << "[+] Размер: ";
+        int size;
+        cin >> size;
+
+        if (size <= 0)
+            goto invalid_value;
+
+        for (int y = 0; y < size; y++) {
+            if (y % 2 == 0) {
+                for (int i = 0; i < size; i++) {
+                    cout << tex;
+                }
+            }
+            else {
+                if ((y / 2) % 2 == 0) {
+                    for (int i = 0; i < size - 1; i++) {
+                        cout << " ";
+                    }
+                    cout << tex;
+                }
+                else {
+                    cout << tex;
+                }
+            }
+
+            cout << endl;
+        }
+
+        break;
+    }
+    case 10: {
+        cout << "[+] Размер: ";
+        int size;
+        cin >> size;
+
+        if (size <= 0)
+            goto invalid_value;
+
+        for (int y = 0; y < size; y++) {
+            for (int x = 0; x < size; x++) {
+                int d = max(
+                    abs(x - size / 2), 
+                    abs(y - size / 2)
+                );
+
+                if (d % 2 == 0) {
+                    cout << tex;
+                }
+                else {
+                    cout << ' ';
+                }
+            }
+            cout << endl;
+        }
+
+        break;
+    }
     }
 
     return 0;
@@ -1002,5 +1272,5 @@ invalid_value:
 int main()
 {
     setlocale(0, "");
-    return work12(); 
+    return work11_13_14_15_16_17_18_19_20_21(); 
 }

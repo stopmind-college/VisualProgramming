@@ -1,5 +1,7 @@
-﻿
-#include <iostream>
+﻿#include <iostream>
+#include <iomanip>
+#include <algorithm>
+#include <functional>
 
 using namespace std;
 
@@ -637,6 +639,7 @@ int work11_13_14_15_16_17_18_19_20_21() {
     int figure;
     cin >> figure;
 
+
     cout << endl;
 
     switch (figure) {
@@ -1039,10 +1042,12 @@ int work11_13_14_15_16_17_18_19_20_21() {
         if (size <= 0)
             goto invalid_value;
 
+        size += 1 - size % 2;
+
         for (int y = 0; y < size; y++) {
             for (int x = 0; x < size; x++) {
                 int d = max(
-                    abs(x - size / 2), 
+                    abs(x - size / 2),
                     abs(y - size / 2)
                 );
 
@@ -1269,8 +1274,187 @@ invalid_value:
     return 1;
 }
 
+int work22() {
+    int arr_int[10] = { 0,1,2,3,4,5,6,7,8,9 };
+    short arr_short[10] = { 324,53,77,34,4,88,6,24,12,100 };
+    long arr_long[10] = { 100000,134777,3472565,423435348,3242364,598,6135,-3457,248,-9 };
+    float arr_float[10] = { 10.34f,71.34f,32.34f,73.344f,24.3466f,50.34f,26.34f,77.34f,83.34f,9.34f };
+    double arr_double[10] = { 435.234,758.12,-1234.3,123123,435435.8888,234324,988.332,34345.12222,234,90 };
+    char arr_char[10] = { 'a','b','4','e','h','9','n','j','k','u'};
+    bool arr_bool[10] = { true,false,false,true,false,false,false,true,true,false };
+    string arr_string[10] = { "hello","bye","word","drop","core","simple","kernel","main","derive","template"};
+
+    cout << "[+] Массив INT" << endl;
+    for (int i = 0; i < 10; i++) {
+        cout << "[+] arr_int[" << i << "] | значение: " << arr_int[i] << endl;
+    }
+
+    cout << "[+] Массив SHORT" << endl;
+    for (int i = 0; i < 10; i++) {
+        cout << "[+] arr_short[" << i << "] | значение: " << arr_short[i] << endl;
+    }
+
+    cout << "[+] Массив LONG" << endl;
+    for (int i = 0; i < 10; i++) {
+        cout << "[+] arr_long[" << i << "] | значение: " << arr_long[i] << endl;
+    }
+
+    cout << "[+] Массив FLOAT" << endl;
+    for (int i = 0; i < 10; i++) {
+        cout << "[+] arr_float[" << i << "] | значение: " << arr_float[i] << endl;
+    }
+
+    cout << "[+] Массив DOUBLE" << endl;
+    for (int i = 0; i < 10; i++) {
+        cout << "[+] arr_double[" << i << "] | значение: " << arr_double[i] << endl;
+    }
+
+    cout << "[+] Массив CHAR" << endl;
+    for (int i = 0; i < 10; i++) {
+        cout << "[+] arr_char[" << i << "] | значение: " << arr_char[i] << endl;
+    }
+
+    cout << "[+] Массив BOOL" << endl;
+    for (int i = 0; i < 10; i++) {
+        cout << "[+] arr_bool[" << i << "] | значение: " << arr_bool[i] << endl;
+    }
+
+    cout << "[+] Массив STRING" << endl;
+    for (int i = 0; i < 10; i++) {
+        cout << "[+] arr_string[" << i << "] | значение: " << arr_string[i] << endl;
+    }
+
+    return 0;
+}
+
+int work23() {
+    cout << "Введите 5 чисел: " << endl;
+    int arr[5] = {};
+
+    cin >> arr[0];
+    cin >> arr[1];
+    cin >> arr[2];
+    cin >> arr[3];
+    cin >> arr[4];
+
+    for (int i = 0; i < 5; i++) {
+        int n = arr[i];
+        cout
+            << "Таблица " << i + 1 << endl
+            << "Число |  Пример   |Результат" << endl
+            << setw(4) << left << n << "  |" << setw(4) << right << n << " + " << setw(4) << left << n << "|" << n + n << endl
+            << setw(4) << left << n << "  |" << setw(4) << right << n << " - " << setw(4) << left << n << "|" << n - n << endl
+            << setw(4) << left << n << "  |" << setw(4) << right << n << " * " << setw(4) << left << n << "|" << n * n << endl;
+            
+        if (n == 0) {
+            cout
+                << "0     |   0 / 0   |Не определено" << endl
+                << endl;
+        }
+        else {
+            cout
+                << setw(4) << left << n << "  |" << setw(4) << right << n << " / " << setw(4) << left << n << "|" << n / n << endl
+                << endl;
+        }
+    }
+
+    return 0;
+}
+
+int work24() {
+    int arr[7];
+    bool init = true;
+
+    while (true) {
+        if (init) {
+            init = false;
+            for (int i = 0; i < 7; i++) {
+                cout << "[+] Инициализация | ячейка " << i << ": ";
+                int a;
+                cin >> a;
+                arr[i] = a;
+            }
+        }
+
+        cout
+            << endl
+            << "[+] Настройки массива:" << endl
+            << endl
+            << "[1] Сортировка по возрастанию" << endl
+            << "[2] Сортировка по убыванию" << endl
+            << "[3] Перемножить массив" << endl
+            << "[4] Сложить массив" << endl
+            << "[5] Разделить массив" << endl
+            << "[6] Обнулить массив" << endl
+            << endl
+            << "[9] Задать новые значения массиву" << endl
+            << "[+] Ввод: ";
+
+        for (int i = 0; i < 7; i++) {
+            cout << i << ": " << arr[i] << endl;
+        }
+
+        int a;
+        cin >> a;
+
+        switch (a) {
+        case 1:
+            sort(arr, arr + 7);
+            for (int i = 0; i < 7; i++) {
+                cout << i << ': ' << arr[i] << endl;
+            }
+            break;
+        case 2:
+            sort(arr, arr + 7, greater<int>());
+            for (int i = 0; i < 7; i++) {
+                cout << i << ': ' << arr[6 - i] << endl;
+            }
+           break;
+           
+           int n;
+        case 3:
+            cout << "Введите число: ";
+            cin >> n;
+
+            for (int i = 0; i < 7; i++) {
+                cout << i << ': ' << arr[i] * n << endl;
+            }
+           break;
+        case 4:
+            cout << "Введите число: ";
+            cin >> n;
+
+            for (int i = 0; i < 7; i++) {
+                cout << i << ': ' << arr[i] + n << endl;
+            }
+           break;
+        case 5:
+            cout << "Введите число: ";
+            cin >> n;
+
+            for (int i = 0; i < 7; i++) {
+                cout << i << ': ' << arr[i] / n << endl;
+            }
+           break;
+        case 6:
+            cout << "Массив обнулен" << endl;
+            for (int i = 0; i < 7; i++) {
+                arr[i] = 0;
+            }
+            break;
+        case 9:
+            init = true;
+            break;
+        default:
+            cout << "Недопустимое значение" << endl;
+            return 1;
+        }
+    }
+    return 0;
+}
+
 int main()
 {
     setlocale(0, "");
-    return work11_13_14_15_16_17_18_19_20_21(); 
+    return work24(); 
 }

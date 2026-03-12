@@ -1616,12 +1616,14 @@ int quarter() {
 
     cout << endl;
 
-    for (int y = 0; y < half; y++) {
+    for (int y = 2; y < half; y++) {
         for (int i = 0; i < gap; i++)
             cout << ' ';
         
-        for (int i = 0; i < half; i++)
-            cout << '#';
+        cout << '#';
+        for (int i = 2; i < half; i++)
+            cout << ' ';
+        cout << '#';
 
         cout << endl;
     }
@@ -1653,32 +1655,84 @@ int quarters() {
     if (size <= 0)
         goto invalid_value;
 
-    for (int y = 0; y < half; y++) {
-        cout << "\033[92m";
-        for (int x = 0; x < half; x++) {
-            cout << '#';
-        }
+    cout << "\033[92m";
+    for (int x = 0; x < half; x++) {
+        cout << '#';
+    }
 
-        cout << "\033[33m";
-        for (int x = 0; x < half2; x++) {
-            cout << '#';
+    cout << "\033[33m";
+    for (int x = 0; x < half2; x++) {
+        cout << '#';
+    }
+
+    cout << endl;
+    
+
+    for (int y = 0; y < half-2; y++) {
+        cout << "\033[92m#";
+        for (int x = 0; x < half-2; x++) {
+            cout << ' ';
         }
+        cout << '#';
+
+        cout << "\033[33m#";
+        for (int x = 0; x < half2-2; x++) {
+            cout << ' ';
+        }
+        cout << '#';
 
         cout << endl;
     }
 
-    for (int y = 0; y < half; y++) {
-        cout << "\033[91m";
-        for (int x = 0; x < half; x++) {
-            cout << '#';
-        }
+    cout << "\033[92m";
+    for (int x = 0; x < half; x++) {
+        cout << '#';
+    }
 
-        cout << "\033[97m";
-        for (int x = 0; x < half2; x++) {
-            cout << '#';
+    cout << "\033[33m";
+    for (int x = 0; x < half2; x++) {
+        cout << '#';
+    }
+
+    cout << endl;
+    
+    cout << "\033[91m";
+    for (int x = 0; x < half; x++) {
+        cout << '#';
+    }
+
+    cout << "\033[97m";
+    for (int x = 0; x < half2; x++) {
+        cout << '#';
+    }
+
+    cout << endl;
+
+
+    for (int y = 0; y < half - 2; y++) {
+        cout << "\033[91m#";
+        for (int x = 0; x < half - 2; x++) {
+            cout << ' ';
         }
+        cout << '#';
+
+        cout << "\033[97m#";
+        for (int x = 0; x < half2 - 2; x++) {
+            cout << ' ';
+        }
+        cout << '#';
 
         cout << endl;
+    }
+
+    cout << "\033[91m";
+    for (int x = 0; x < half; x++) {
+        cout << '#';
+    }
+
+    cout << "\033[97m";
+    for (int x = 0; x < half2; x++) {
+        cout << '#';
     }
 
     return 0;
@@ -1688,8 +1742,493 @@ invalid_value:
     return 1;
 }
 
+enum PlayerColor {
+    GREEN,
+    BLUE,
+    RED,
+    GRAY
+};
+
+const char* clr(PlayerColor color) {
+    switch (color) {
+    case PlayerColor::BLUE:
+        return "\033[34m";
+    case PlayerColor::GREEN:
+        return "\033[32m";
+    case PlayerColor::RED:
+        return "\033[91m";
+    case PlayerColor::GRAY:
+        return "\033[90m";
+    }
+}
+
+void apply(PlayerColor color) {
+    cout << clr(color);
+}
+
+PlayerColor select_color() {
+    while (true) {
+        cout
+            << endl
+            << "\033[93m+\033[0m | \033[Выберите цвет" << endl
+            << endl
+            << "\033[93m1\033[0m | ";
+
+        apply(PlayerColor::RED);
+        cout
+            << "Красный" << endl
+            << "\033[93m2\033[0m | ";
+
+
+        apply(PlayerColor::BLUE);
+        cout
+            << "Синий" << endl
+            << "\033[93m3\033[0m | ";
+
+        apply(PlayerColor::GREEN);
+        cout
+            << "Зеленый" << endl;
+
+        cout << endl
+            << "\033[93m>\033[0m | Ввод:  \033[90m";
+
+        int select;
+        cin >> select;
+
+        switch (select) {
+        case 1:return PlayerColor::RED;
+        case 2:return PlayerColor::BLUE;
+        case 3:return PlayerColor::GREEN;
+        }
+    }
+}
+
+struct PlayerStat {
+    int wins;
+    int loses;
+    int draws;
+};
+
+struct PlayerData {
+    string name;
+    char figure;
+    PlayerColor color;
+    PlayerStat stat;
+};
+
+enum Enemy {
+    Player,
+    Computer
+};
+
+void player_settings(PlayerData& player, int id) {
+    while (true) {
+        cout
+            << endl
+            << "\033[93m+\033[0m | \033[4mНастройки игрока\033[24m \033[93m[" << id << "]\033[0m" << endl
+            << endl
+            << "\033[93m1\033[0m | Ник    : \033[90m" << player.name << "\033[0m" << endl
+            << "\033[93m2\033[0m | Фигура : \033[90m" << player.figure << "\033[0m" << endl
+            << "\033[93m3\033[0m | Цвет   : ";
+
+        apply(player.color);
+
+        switch (player.color) {
+        case PlayerColor::BLUE:
+            cout << "синий";
+            break;
+        case PlayerColor::GREEN:
+            cout << "зеленый";
+            break;
+        case PlayerColor::RED:
+            cout << "красный";
+            break;
+        }
+
+        cout << "\033[0m" << endl
+            << "\033[93m4\033[0m | Назад" << endl
+            << endl
+            << "\033[93m>\033[0m | Ввод: \033[90m";
+
+        int select;
+        cin >> select;
+        switch (select) {
+        case 1: {
+            cout
+                << "\033[93m>\033[0m | Новое имя: \033[90m";
+            string name;
+            cin >> name;
+
+            player.name = name;
+
+            break;
+        }
+        case 2:
+            cout
+                << "\033[93m>\033[0m | Новая фигура: \033[90m";
+            char figure;
+            cin >> figure;
+
+            player.figure = figure;
+
+            break;
+        case 3:
+            player.color = select_color();
+            break;
+        case 4:
+            return;
+        }
+    }
+}
+
+void settings(
+    PlayerData& player1,
+    PlayerData& player2
+) {
+    while (true) {
+        cout
+            << endl
+            << "\033[93m+\033[0m | \033[4mНастройки игрока\033[24m" << endl
+            << endl
+            << "\033[93m1\033[0m | Игрок 1" << endl
+            << "\033[93m2\033[0m | Игрок 2" << endl
+            << "\033[93m3\033[0m | Назад" << endl
+            << endl
+            << "\033[93m>\033[0m | Ввод: \033[90m";
+
+        int select;
+        cin >> select;
+
+        switch (select) {
+        case 1:
+            player_settings(player1, 1);
+            break;
+        case 2:
+            player_settings(player2, 2);
+            break;
+        case 3:
+            return;
+        }
+    }
+}
+
+void player_stat(int index, string& name, PlayerStat& stat) {
+    float points = 
+        stat.wins * 5 
+        - stat.loses * 6 
+        - stat.draws * 1.5f;
+    
+    cout << "\033[93m" << index << "\033[0m | " << setw(15) << left << name;
+    if (name.length() > 15) {
+        cout 
+            << endl
+            << "                   ";
+    }
+
+    cout
+        << " " << setw(4) << left << stat.wins
+        << " " << setw(4) << left << stat.loses
+        << " " << setw(4) << left << stat.draws
+        << " | " << setw(4) << left << points
+        << endl;
+
+}
+
+void statistics(PlayerData& computer, PlayerData& player1, PlayerData& player2) {
+    cout
+        << endl
+        << "\033[93m+\033[0m | \033[4mСтатистика\033[24m" << endl;
+
+    cout <<
+        "                    \033[32mW    \033[91mL    \033[90mD\033[0m    | Очки" << endl;
+
+    player_stat(1, player1.name, player1.stat);
+    player_stat(2, player2.name, player2.stat);
+    player_stat(3, computer.name, computer.stat);
+}
+
+void show_cell(PlayerData* player, int num) {
+    if (player == nullptr) {
+        cout << "\033[0m" << num;
+    }
+    else {
+        cout << clr(player->color) << player->figure;
+    }
+}
+
+void show_line(PlayerData* player[3], int base) {
+    cout << "    ";
+    show_cell(player[0], base);
+    cout << " \033[90m| ";
+    show_cell(player[1], base + 1);
+    cout << " \033[90m| ";
+    show_cell(player[2], base + 2);
+    cout << endl;
+}
+
+void draw_map(PlayerData* cells[9]) {
+    cout << endl;
+    show_line(cells, 1);
+    cout << "    \033[90m---------" << endl;
+    show_line(cells + 3, 4);
+    cout << "    \033[90m---------" << endl;
+    show_line(cells + 6, 7);
+}
+
+int ask_cell(PlayerData& player) {
+    while (true) {
+        cout
+            << endl
+            << "\033[93m>\033[0m | " << clr(player.color) << player.name << "\033[0m: \033[90m";
+        
+        int n;
+        cin >> n;
+        if (n >= 1 && n <= 9) {
+            return n;
+        }
+    }
+}
+
+enum GameResult {
+    NO_RESULT,
+    DRAW,
+    WIN_PLAYER1,
+    WIN_PLAYER2
+};
+
+static int LINES[8][3] = {
+    {0, 1, 2},
+    {3, 4, 5},
+    {6, 7, 8},
+
+    {0, 3, 6},
+    {1, 4, 7},
+    {2, 5, 8},
+
+    {0, 4, 8},
+    {6, 4, 2}
+};
+
+GameResult check_result(
+    PlayerData* cells[9],
+    PlayerData& player1,
+    PlayerData& player2
+) {
+    bool has_empty = false;
+
+    for (int i = 0; i < 8; i++) {
+        auto player = cells[LINES[i][0]];
+        bool same_player = true;
+
+        if (player == nullptr) {
+            has_empty = true;
+            continue;
+        }
+
+        for (int j = 1; j <= 2; j++) {
+            auto cell = cells[LINES[i][j]];
+            if (player != cell) {
+                if (cell == nullptr)
+                    has_empty = true;
+                same_player = false;
+                break;
+            }
+        }
+
+        if (same_player)
+            return player == &player1 ? GameResult::WIN_PLAYER1 : GameResult::WIN_PLAYER2;
+    }
+
+    return has_empty ? GameResult::NO_RESULT : GameResult::DRAW;
+}
+
+int ai_find_first(PlayerData* cells[9], PlayerData* target) {
+    for (int i = 0; i < 8; i++) {
+        int empty = -1;
+        for (int j = 0; j < 3; j++) {
+            auto cell = cells[LINES[i][j]];
+            if (cell == nullptr) {
+                if (empty != -1) {
+                    empty = -1;
+                    break;
+                }
+                empty = LINES[i][j];
+            }
+            else if (cell != target) {
+                empty = -1;
+                break;
+            }
+        }
+
+        if (empty != -1)
+            return empty;
+    }
+
+    return -1;
+}
+
+int ai_select_random(PlayerData* cells[9]) {
+    int frees[9] = {};
+    int count = 0;
+
+    for (int i = 0; i < 9; i++) {
+        if (cells[i] == nullptr) {
+            frees[count] = i;
+            count++;
+        }
+    }
+
+    return frees[rand() % count];
+}
+
+int ai_turn(PlayerData* cells[9], PlayerData* ai, PlayerData* player) {
+    int result = ai_find_first(cells, ai);
+    if (result != -1)
+        return result;
+
+    result = ai_find_first(cells, player);
+    if (result != -1)
+        return result;
+
+    return ai_select_random(cells);
+}
+
+void game(
+    PlayerData& player1,
+    PlayerData& player2,
+    bool enable_ai
+) {
+    PlayerData* cells[9]{};
+
+    cout
+        << endl
+        << "\033[93m+\033[0m | \033[4mКрестики нолики\033[24m" << endl;
+
+    GameResult result;
+    while (true) {
+        draw_map(cells);
+
+        int n;
+        do n = ask_cell(player1);
+        while (cells[n - 1] != nullptr);
+
+        cells[n - 1] = &player1;
+
+        result = check_result(cells, player1, player2);
+        if (result != GameResult::NO_RESULT)
+            break;
+
+        if (enable_ai) {
+            cells[ai_turn(cells, &player2, &player1)] = &player2;
+        } else {
+            draw_map(cells);
+            int n;
+            do n = ask_cell(player2);
+            while (cells[n - 1] != nullptr);
+
+            cells[n - 1] = &player2;
+        }
+
+        result = check_result(cells, player1, player2);
+        if (result != GameResult::NO_RESULT)
+            break;
+    }
+
+    draw_map(cells);
+
+    switch (result) {
+    case GameResult::DRAW:
+        cout << "\033[93m+\033[0m | \033[0mНичья!\033[0m" << endl;
+        player1.stat.draws++;
+        player2.stat.draws++;
+        break;
+    case GameResult::WIN_PLAYER1:
+        cout << "\033[93m+\033[0m | \033[0mПобедил " << clr(player1.color) << player1.name << "\033[0m." << endl;
+        player1.stat.wins++;
+        player2.stat.loses++;
+        break;
+    case GameResult::WIN_PLAYER2:
+        cout << "\033[93m+\033[0m | \033[0mПобедил " << clr(player2.color) << player2.name << "\033[0m." << endl;
+        player1.stat.loses++;
+        player2.stat.wins++;
+        break;
+    }
+}
+
+int work26() {
+    PlayerData computer{};
+    computer.name = "Компьютер";
+    computer.color = PlayerColor::GRAY;
+    computer.figure = '*';
+
+    PlayerData player1{};
+    player1.name = "Игрок 1";
+    player1.figure = 'X';
+    player1.color = PlayerColor::RED;
+
+    PlayerData player2{};
+    player2.name = "Игрок 2";
+    player2.figure = 'O';
+    player2.color = PlayerColor::BLUE;
+
+    while (true) {
+        cout
+            << endl
+            << "\033[93m+\033[0m | \033[4mМеню игры\033[24m" << endl
+            << endl
+            << "\033[93m1\033[0m | Начать игру" << endl
+            << "\033[93m2\033[0m | Статистика" << endl
+            << "\033[93m3\033[0m | Настройки" << endl
+            << "\033[93m4\033[0m | Выйти" << endl
+            << endl
+            << "\033[93m>\033[0m | Ввод: \033[90m";
+
+        int select;
+        cin >> select;
+
+        switch (select) {
+        case 1:
+            while (true) {
+                cout
+                    << endl
+                    << "\033[93m+\033[0m | \033[4mКрестики нолики\033[24m" << endl
+                    << endl
+                    << "\033[93m1\033[0m | Одиночная игра" << endl
+                    << "\033[93m2\033[0m | Два игрока" << endl
+                    << endl
+                    << "\033[93m0\033[0m | Назад" << endl
+                    << endl
+                    << "\033[93m>\033[0m | Ввод: \033[90m";
+
+                cin >> select;
+                switch (select) {
+                case 1:
+                    game(player1, computer, true);
+                    select = 0;
+                    break;
+                case 2:
+                    game(player1, player2, false);
+                    select = 0;
+                    break;
+                }
+
+                if (select == 0) break;
+            }
+            break;
+        case 2:
+            statistics(computer, player1, player2);
+            break;
+        case 3:
+            settings(player1, player2);
+            break;
+        case 4:
+            return 0;
+        }
+    }
+}
+
 int main()
 {
-    setlocale(0, "");
-    return quarters(); 
+    setlocale(LC_ALL, "");
+    return work26(); 
 }

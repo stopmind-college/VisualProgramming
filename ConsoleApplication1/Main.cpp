@@ -3,6 +3,9 @@
 #include <algorithm>
 #include <functional>
 
+#define _USE_MATH_DEFINES
+#include <math.h>
+
 using namespace std;
 
 int work1()
@@ -2227,8 +2230,154 @@ int work26() {
     }
 }
 
+double read_one() {
+    cout << "Введите число: ";
+    double a;
+    cin >> a;
+    return a;
+}
+
+struct TwoValues {
+    double a;
+    double b;
+};
+
+TwoValues read_two() {
+    TwoValues v;
+    cout << "Введите первое число: ";
+    cin >> v.a;
+    cout << "Введите второе число: ";
+    cin >> v.b;
+
+    return v;
+}
+
+int sum() {
+    auto v = read_two();
+
+    cout << "Результат: " << v.a << " + " << v.b << " = " << v.a + v.b << endl;
+    return 0;
+}
+
+int sub() {
+    auto v = read_two();
+
+    cout << "Результат: " << v.a << " - " << v.b << " = " << v.a - v.b << endl;
+    return 0;
+}
+
+int mult() {
+    auto v = read_two();
+
+    cout << "Результат: " << v.a << " * " << v.b << " = " << v.a * v.b << endl;
+    return 0;
+}
+
+int deli() {
+    auto v = read_two();
+
+    if (v.b == 0) {
+        cout << "Ноль не может быть делителем!" << endl;
+        return 1;
+    }
+
+    cout << "Результат: " << v.a << " / " << v.b << " = " << v.a / v.b << endl;
+    return 0;
+}
+
+int mod() {
+    auto v = read_two();
+
+    if (v.b == 0) {
+        cout << "Ноль не может быть делителем!" << endl;
+        return 1;
+    }
+    cout << "Результат: " << v.a << " % " << v.b << " = " << (int)v.a % (int)v.b << endl;
+    return 0;
+}
+
+int pwr() {
+    auto v = read_two();
+
+    cout << "Результат: " << v.a << " ^ " << v.b << " = " << powf(v.a, v.b) << endl;
+    return 0;
+}
+
+int root() {
+    float v = read_one();
+
+    if (v < 0) {
+        cout << "Отрицательные числа не допускаются!" << endl;
+        return 1;
+    }
+
+    cout << "Результат: " << "корень " << v <<  " = " << sqrtf(v) << endl;
+    return 0;
+}
+
+int cube() {
+    float v = read_one();
+
+    cout << "Результат: " << "куб " << v << " = " << pow(v, 3) << endl;
+    return 0;
+}
+
+const double TO_RAD = M_PI / 180;
+
+int msin() {
+    float v = read_one();
+
+    cout << "Результат: " << "синус " << v << " = " << sin(v * TO_RAD) << endl;
+    return 0;
+}
+
+int mcos() {
+    float v = read_one();
+
+    cout << "Результат: " << "косинус " << v << " = " << cos(v * TO_RAD) << endl;
+    return 0;
+}
+
+int work29() {
+    int (*methods[10])() = {
+        sum,
+        sub,
+        mult,
+        deli,
+        mod,
+        pwr,
+        root,
+        cube,
+        msin,
+        mcos,
+    };
+
+    cout
+        << "1. Складывать" << endl
+        << "2. Вычитать" << endl
+        << "3. Умножить" << endl
+        << "4. Делить" << endl
+        << "5. Остаток от деления" << endl
+        << "6. Степень" << endl
+        << "7. Корень" << endl
+        << "8. Куб" << endl
+        << "9. Синус" << endl
+        << "10. Косинус" << endl
+        << "Выберите операцию: ";
+
+    int i;
+    cin >> i;
+    i--;
+    if (i < 0 || i > 9) {
+        cout << "Неверный номер!" << endl;
+        return 1;
+    }
+
+    return methods[i]();;
+}
+
 int main()
 {
     setlocale(LC_ALL, "");
-    return work26(); 
+    return work29(); 
 }
